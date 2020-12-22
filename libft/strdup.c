@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   isalpha.c                                          :+:      :+:    :+:   */
+/*   strdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hcho </var/mail/hcho>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/22 15:57:34 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/22 16:23:21 by hcho             ###   ########.fr       */
+/*   Created: 2020/12/22 16:40:43 by hcho              #+#    #+#             */
+/*   Updated: 2020/12/22 16:45:08 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int c)
+#include <stdlib.h>
+
+char	*ft_strdup(const char *s1)
 {
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	else if (c >= 'A' && c <= 'Z')
-		return (1);
-	return (0);
+	size_t	i;
+	char	*s2;
+
+	i = 0;
+	while (*(s1 + i))
+	   i++;
+	s2 = (char *)malloc(sizeof(char) * (i + 1));
+	if (!s2)
+		return (0);
+	i = -1;
+	while (*(s1 + (++i)))
+		*(s2 + i) = *(s1 + i);
+	*(s2 + i) = 0;
+	return (s2);
 }
