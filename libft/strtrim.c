@@ -6,7 +6,7 @@
 /*   By: hcho </var/mail/hcho>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 21:42:52 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 08:41:26 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 17:08:00 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (*(s1 + start) && ft_strchr(set, *(s1 + start)))
 		start++;
 	end--;
-	while (end >= 0 && *(s1 + end) && ft_strchr(set, *(s1 + end)))
+	while (end != 0 && *(s1 + end) && ft_strchr(set, *(s1 + end)))
 		end--;
 	if (start > end)
 		return (0);
