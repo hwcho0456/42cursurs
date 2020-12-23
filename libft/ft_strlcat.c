@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 04:41:53 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:21:19 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 20:35:21 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		s_len++;
 	while (*(dst + i) && i < size)
 		i++;
-	while (*(src + j) && i + j < size - 1)
+	while (*(src + j) && i + j + 1 < size)
 	{
 		*(dst + i + j) = *(src + j);
 		j++;

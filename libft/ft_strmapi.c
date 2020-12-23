@@ -6,9 +6,11 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 12:51:01 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:18:45 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 22:12:09 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdlib.h>
 
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char))
 {

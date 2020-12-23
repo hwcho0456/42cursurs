@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 13:43:57 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:24:08 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 19:55:10 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ char	*ft_strchr(const char *s, int c)
 	i = 0;
 	while (*(s + i))
 	{
-		if (*(s + i) == (unsigned char)c)
+		if (*(s + i) == c)
 			return ((char *)s + i);
 		i++;
 	}
+	if (c == 0)
+		return ((char *)s + i);
 	return (0);
 }

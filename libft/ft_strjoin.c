@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 21:35:09 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:26:51 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 21:33:43 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	size_t	k;
 	char	*str;
 
+	if (!s1 || !s2)
+		return (0);
 	i = 0;
 	while (*(s1 + i))
 		i++;
@@ -35,6 +37,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	k = -1;
 	while (++k < j)
 		*(str + i + k) = *(s2 + k);
-	*(str + k) = 0;
+	*(str + i + k) = 0;
 	return (str);
 }

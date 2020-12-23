@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 13:59:35 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 20:50:58 by hcho             ###   ########.fr       */
+/*   Created: 2020/12/23 22:16:12 by hcho              #+#    #+#             */
+/*   Updated: 2020/12/23 22:28:31 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <unistd.h>
 
-size_t	ft_strlcpy(char *dest, char *src, size_t size)
+void	ft_putchar_fd(char c, int fd)
 {
-	size_t	s_len;
-	size_t	i;
-
-	s_len = 0;
-	i = 0;
-	while (*(src + s_len))
-		s_len++;
-	if (size == 0)
-		return (s_len);
-	while (*(src + i) && i < size - 1)
-	{
-		*(dest + i) = *(src + i);
-		i++;
-	}
-	*(dest + i) = 0;
-	return (s_len);
+	if (fd == -1)
+		return ;
+	write(fd, &c, 1);
 }

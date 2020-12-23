@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 21:42:52 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:28:54 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 21:51:15 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,27 @@ static int	ft_strchr(const char *str, const int c)
 	return (0);
 }
 
+static char	*ft_strdup(const char *str)
+{
+	char	*dst;
+	size_t	i;
+
+	i = 0;
+	while (*(str + i))
+		i++;
+	dst = (char *)malloc(sizeof(char) * (i + 1));
+	if (!dst)
+		return (0);
+	i = 0;
+	while (*(str + i))
+	{
+		*(dst + i) = *(str + i);
+		i++;
+	}
+	*(dst + i) = 0;
+	return (dst);
+}
+
 char		*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
@@ -41,10 +62,10 @@ char		*ft_strtrim(char const *s1, char const *set)
 	while (*(s1 + start) && ft_strchr(set, *(s1 + start)))
 		start++;
 	end--;
-	while (end != 0 && *(s1 + end) && ft_strchr(set, *(s1 + end)))
+	while (end >= start && *(s1 + end) && ft_strchr(set, *(s1 + end)))
 		end--;
 	if (start > end)
-		return (0);
+		return (ft_strdup(""));
 	str = (char *)malloc(sizeof(char) * (end - start + 2));
 	if (!str)
 		return (0);

@@ -6,13 +6,12 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 10:24:05 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:25:36 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 20:25:31 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static void	ft_cur(char *str, size_t cnt, int n)
 {
