@@ -6,32 +6,32 @@
 #    By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/23 15:53:21 by hcho              #+#    #+#              #
-#    Updated: 2020/12/23 16:11:24 by hcho             ###   ########.fr        #
+#    Updated: 2020/12/23 18:02:36 by hcho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-TARGET = libft.a  
-SOURCES = memset.c bzero.c memcpy.c memccpy.c memmove.c memchr.c memcmp.c \
-		  strlen.c strlcpy.c strlcat.c strchr.c strrchr.c strnstr.c strncmp.c \
-		  atoi.c isalpha.c isdigit.c isalnum.c isascii.c isprint.c toupper.c tolower.c \
-		  calloc.c strdup.c substr.c strjoin.c strtrim.c split.c itoa.c
+NAME = libft.a  
+SOURCES = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c ft_memcmp.c \
+		  ft_strlen.c ft_strlcpy.c ft_strlcat.c ft_strchr.c ft_strrchr.c ft_strnstr.c ft_strncmp.c \
+		  ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_toupper.c ft_tolower.c \
+		  ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c
 OBJECTS = $(SOURCES:.c=.o)
 
-all: $(TARGET)
+all: $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
-$(TARGET): $(OBJECTS)
-	ar rcs -o $@ $(OBJECTS)
+$(NAME): $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
 
-clean:
+clean: 
 	rm -f $(OBJECTS)
 
 fclean: clean 
-	rm -f $(TARGET)
+	rm -f $(NAME)
 
 re: fclean all

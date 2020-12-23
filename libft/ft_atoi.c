@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   atoi.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hcho </var/mail/hcho>                      +#+  +:+       +#+        */
+/*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 15:33:21 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/22 15:55:39 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 17:32:51 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,18 @@ static int	ft_isspace(const char *str)
 	return (0);
 }
 
-int	ft_atoi(const char* str)
+int			ft_atoi(const char *str)
 {
 	size_t	i;
 	int		num;
 	int		sign;
-	
+
 	i = 0;
 	num = 0;
 	sign = 1;
-
 	while (ft_isspace(str + i))
 		i++;
-	if (*(str + i) == '-' || *(str + i) == '+') 
+	if (*(str + i) == '-' || *(str + i) == '+')
 		sign = (*(str + i++) == '-') ? -1 : 1;
 	while (*(str + i))
 	{
