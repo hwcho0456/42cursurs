@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   itoa.c                                             :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hcho </var/mail/hcho>                      +#+  +:+       +#+        */
+/*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 10:24:05 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 12:49:45 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 18:25:36 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_cur(char *str, size_t cnt, int n)
 	*(str + cnt) = '0' + n % 10;
 }
 
-char	*ft_itoa(int n)
+char		*ft_itoa(int n)
 {
 	size_t	cnt;
 	int		i;
@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 	else
 	{
 		ft_cur(str, cnt - 2, n / 10);
-		*(str + cnt - 1)  = '0' + n % 10;
+		*(str + cnt - 1) = '0' + n % 10;
 	}
 	return (str);
 }

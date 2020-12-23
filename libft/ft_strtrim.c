@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strtrim.c                                          :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hcho </var/mail/hcho>                      +#+  +:+       +#+        */
+/*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 21:42:52 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 17:08:00 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/23 18:28:54 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static int	ft_strchr(const char *str, const int c)
 		i++;
 	}
 	return (0);
-}	
+}
 
-char	*ft_strtrim(char const *s1, char const *set)
+char		*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
 	size_t	end;
