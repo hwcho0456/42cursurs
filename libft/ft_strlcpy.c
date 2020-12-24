@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 13:59:35 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 20:50:58 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/24 17:03:17 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 	size_t	s_len;
 	size_t	i;
 
+	if (!dest || !src)
+		return (0);
 	s_len = 0;
 	i = 0;
 	while (*(src + s_len))

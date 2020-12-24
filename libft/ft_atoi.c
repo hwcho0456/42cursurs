@@ -6,11 +6,12 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 15:33:21 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:09:34 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/24 16:24:05 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <limits.h>
 
 static int	ft_isspace(const char *str)
 {
@@ -24,7 +25,8 @@ static int	ft_isspace(const char *str)
 int			ft_atoi(const char *str)
 {
 	size_t	i;
-	int		num;
+	long	num;
+	long	limit;
 	int		sign;
 
 	i = 0;
@@ -38,6 +40,11 @@ int			ft_atoi(const char *str)
 	{
 		if (*(str + i) < '0' || *(str + i) > '9')
 			return (sign * num);
+		limit = num;
+		if (sign == 1 && limit > (LLONG_MAX - *(str + i) + '0') / 10)
+			return (-1);
+		if (sign == -1 && limit > -((LLONG_MIN + *(str + i) - '0') / 10))
+			return (0);
 		num = 10 * num + (*(str + i) - '0');
 		i++;
 	}

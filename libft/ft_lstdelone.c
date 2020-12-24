@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 08:09:16 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/24 08:42:14 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/24 13:49:21 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	if (!lst)
+	if (!lst || !del)
 		return ;
 	(*del)(lst->content);
 	free(lst);

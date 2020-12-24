@@ -6,12 +6,29 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:41:46 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:20:41 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/24 17:14:38 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
+
+static int	ft_wcnt(const char *s, char c)
+{
+	size_t	i;
+	int		cnt;
+	int		st;
+
+	i = 0;
+	cnt = 0;
+	st = 0;
+	while (*(s + i))
+	{
+		cnt = (*(s + i) != c && st == 0) ? cnt + 1 : cnt;
+		st = (*(s + i++) == c) ? 0 : 1;
+	}
+	return (cnt);
+}
 
 static char	*ft_wcpy(const char *s, size_t start, char c)
 {
@@ -41,14 +58,10 @@ char		**ft_split(const char *s, char c)
 	int		cnt;
 	int		st;
 
+	if (!s)
+		return (0);
 	i = 0;
-	cnt = 0;
-	st = 0;
-	while (*(s + i))
-	{
-		cnt = (*(s + i) != c && st == 0) ? cnt + 1 : cnt;
-		st = (*(s + i++) == c) ? 0 : 1;
-	}
+	cnt = ft_wcnt(s, c);
 	if (!(strs = (char **)malloc(sizeof(char *) * (cnt + 1))))
 		return (0);
 	cnt = -1;

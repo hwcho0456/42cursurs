@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:54:43 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:14:02 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/24 14:53:22 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	size_t i;
 
-	if (dest <= src)
+	if (dest == src || n == 0)
+		return (dest);
+	if (dest < src)
 	{
 		i = -1;
 		while (++i < n)

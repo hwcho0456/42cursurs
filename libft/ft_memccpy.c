@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 11:55:12 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:13:46 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/24 14:50:05 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 		}
 		*((unsigned char *)dest + i) = *((unsigned char *)src + i);
 	}
+	if (!*((unsigned char *)src + i))
+		*((unsigned char *)dest + i) = 0;
 	return (0);
 }
