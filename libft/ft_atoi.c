@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 15:33:21 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/24 16:24:05 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/26 14:14:18 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ static int	ft_isspace(const char *str)
 
 int			ft_atoi(const char *str)
 {
-	size_t	i;
-	long	num;
-	long	limit;
-	int		sign;
+	size_t		i;
+	long long	num;
+	long long	limit;
+	int			sign;
 
 	i = 0;
 	num = 0;

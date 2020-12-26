@@ -6,12 +6,26 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 08:41:46 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/24 17:14:38 by hcho             ###   ########.fr       */
+/*   Updated: 2020/12/26 14:27:01 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
+
+static char	**ft_wfree(char **strs)
+{
+	size_t i;
+
+	i = 0;
+	while (*(strs + i))
+	{
+		free(*(strs + i));
+		i++;
+	}
+	free(strs);
+	return (strs);
+}
 
 static int	ft_wcnt(const char *s, char c)
 {
@@ -69,7 +83,11 @@ char		**ft_split(const char *s, char c)
 	st = 0;
 	while (*(s + i))
 	{
-		(*(s + i) != c && st == 0) ? *(strs + (++cnt)) = ft_wcpy(s, i, c) : 0;
+		if (*(s + i) != c && st == 0) 
+		{
+			if (!(*(strs + (++cnt)) = ft_wcpy(s, i, c)))
+				return (ft_wfree(strs));
+		}
 		st = (*(s + i++) == c) ? 0 : 1;
 	}
 	*(strs + (++cnt)) = 0;
