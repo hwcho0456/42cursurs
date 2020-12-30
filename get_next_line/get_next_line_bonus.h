@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 13:27:51 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:17:18 by hcho             ###   ########.fr       */
+/*   Created: 2020/12/30 13:49:57 by hcho              #+#    #+#             */
+/*   Updated: 2020/12/30 21:14:27 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	size_t	i;
+# include <stddef.h>
 
-	i = -1;
-	while (++i < n)
-	{
-		if (*((unsigned char *)s + i) == (unsigned char)c)
-			return ((unsigned char *)s + i);
-	}
-	return (0);
-}
+int					get_next_line(int fd, char **line);
+char				*ft_strchr(const char *s, int c);
+size_t				ft_strlen(const char *s);
+char				*ft_strjoinfree(const char *s1, const char *s2);
+
+#endif

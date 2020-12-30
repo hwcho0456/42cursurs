@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/22 21:35:09 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 21:33:43 by hcho             ###   ########.fr       */
+/*   Created: 2020/12/30 13:51:08 by hcho              #+#    #+#             */
+/*   Updated: 2020/12/30 21:08:20 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
 
-char	*ft_strjoin(const char *s1, const char *s2)
+size_t		ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (*(s + i))
+		i++;
+	return (i);
+}
+
+char		*ft_strjoinfree(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	j;
 	size_t	k;
 	char	*str;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (0);
-	i = 0;
-	while (*(s1 + i))
-		i++;
-	j = 0;
-	while (*(s2 + j))
-		j++;
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (i + j + 1));
 	if (!str)
 		return (0);
@@ -38,5 +46,24 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	while (++k < j)
 		*(str + i + k) = *(s2 + k);
 	*(str + i + k) = 0;
+	free((char *)s1);
 	return (str);
+}
+
+char		*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (*(s + i))
+	{
+		if (*(s + i) == c)
+			return ((char *)s + i);
+		i++;
+	}
+	if (c == 0)
+		return ((char *)s + i);
+	return (0);
 }
