@@ -1,20 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   print_character.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/22 15:57:34 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:23:29 by hcho             ###   ########.fr       */
+/*   Created: 2021/01/04 18:10:47 by hcho              #+#    #+#             */
+/*   Updated: 2021/01/04 18:13:23 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalpha(int c)
-{
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	else if (c >= 'A' && c <= 'Z')
-		return (1);
-	return (0);
-}
+void	print_c(ap, opt, cnt);	
+void	print_s(ap, opt, cnt);
+void	print_p(ap, opt, cnt);
+void	print_n(ap, opt, cnt);
+void	print_percent(ap, opt, cnt);

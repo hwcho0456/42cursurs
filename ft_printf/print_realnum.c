@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   print_realnum.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 13:27:51 by hcho              #+#    #+#             */
-/*   Updated: 2020/12/23 18:17:18 by hcho             ###   ########.fr       */
+/*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
+/*   Updated: 2021/01/04 18:13:46 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-
-void	*ft_memchr(const void *s, int c, size_t n)
-{
-	size_t	i;
-
-	i = -1;
-	while (++i < n)
-	{
-		if (*((unsigned char *)s + i) == (unsigned char)c)
-			return ((unsigned char *)s + i);
-	}
-	return (0);
-}
+void	print_f(ap, opt, cnt);
+void	print_e(ap, opt, cnt);	
+void	print_g(ap, opt, cnt);
