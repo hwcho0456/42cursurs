@@ -6,7 +6,7 @@
 #    By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/01 10:33:23 by hcho              #+#    #+#              #
-#    Updated: 2021/01/01 11:42:46 by hcho             ###   ########.fr        #
+#    Updated: 2021/01/01 11:59:38 by hcho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LIBFT = libft.a
 LIBDIR = libft
-NAME = ft_printf.a
+NAME = libftprintf.a
 SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 
