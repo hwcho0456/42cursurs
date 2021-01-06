@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:33:35 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/06 12:58:42 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 17:12:18 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct	s_op
 {
@@ -25,6 +26,7 @@ typedef struct	s_op
 	char	space;
 	char	sharp;
 	char	zero;
+	char	dot;
 	int		width;
 	int		prec;
 	int		len;
@@ -36,7 +38,6 @@ void			get_width(const char *format, va_list ap, size_t *i, t_op *opt);
 void			get_prec(const char *format, va_list ap, size_t *i, t_op *opt);
 void			get_length(const char *format, size_t *i, t_op *opt);
 void			print_d(va_list ap, t_op *opt, int *cnt);
-void			print_i(va_list ap, t_op *opt, int *cnt);
 void			print_u(va_list ap, t_op *opt, int *cnt);
 void			print_x(va_list ap, t_op *opt, int *cnt);
 void			print_X(va_list ap, t_op *opt, int *cnt);

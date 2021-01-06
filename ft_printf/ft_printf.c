@@ -6,7 +6,7 @@
 /*   By: hcho <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 10:51:46 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/06 12:59:15 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 14:43:47 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ static int	is_type(const char c)
 
 static void	print_type(const char type, va_list ap, t_op *opt, int *cnt)
 {
-	if (type == 'd')
+	if (type == 'd' || type == 'i')
 		print_d(ap, opt, cnt);
-	else if (type == 'i')
-		print_i(ap, opt, cnt);
 	else if (type == 'u')
 		print_u(ap, opt, cnt);
 	else if (type == 'x')
@@ -70,6 +68,7 @@ static int	process(const char *format, va_list ap, size_t *i, int *cnt)
 	if (*(format + *i) == '.')
 	{
 		*i += 1;
+		opt->dot = 1;
 		get_prec(format, ap, i, opt);
 	}
 	get_length(format, i, opt);
