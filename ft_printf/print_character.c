@@ -6,12 +6,29 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:47 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/04 18:13:23 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 12:41:25 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	print_c(ap, opt, cnt);	
-void	print_s(ap, opt, cnt);
-void	print_p(ap, opt, cnt);
-void	print_n(ap, opt, cnt);
-void	print_percent(ap, opt, cnt);
+#include "ft_printf.h"
+
+void	print_c(va_list ap, t_op *opt, int *cnt)
+{
+	return ;
+}
+void	print_s(va_list ap, t_op *opt, int *cnt)
+{
+	return ;
+}
+void	print_p(va_list ap, t_op *opt, int *cnt)
+{
+	return ;
+}
+void	print_n(va_list ap, t_op *opt, int *cnt)
+{
+	return ;
+}
+void	print_percent(va_list ap, t_op *opt, int *cnt)
+{
+	return ;
+}

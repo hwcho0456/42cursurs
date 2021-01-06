@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/04 19:53:24 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 12:39:08 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,38 @@ static size_t	get_int_len(unsigned long long int n)
 	return (num_len);
 }
 
-static void		put_int(unsigned long long int n, t_op *opt, size_t *span, int *cnt)
+static void		put_span(t_op *opt, int n, size_t *span, int *cnt)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		(opt->zero == 1) ? write(1, "0", 1) : write(1, " ", 1);
+		*span += 1;
+		*cnt += 1;
+		i++;
+	}
+}
+
+static void		put_int(long long int n, t_op *opt, size_t *span, int *cnt)
 {
 	char	digit;
-	int		
 
 	if (n == 0)
 	{
-		while (opt->spec >= 0)
+		while (*span < opt->spec)
 		{
-			write(1, "0", 1);
-			*cnt += 1;
 			*span += 1;
-			opt->spec--;
+			*cnt += 1;
+			write(1, "0", 1);
 		}
 	}
-	put_int(n/10, opt, span, cnt);
-	digit = n%10 + '0';
-	write(1, &digit, 1);
 	*cnt += 1;
-	opt->
+	*span += 1;
+	cur(n / 10, opt, span, cnt);
+	digit = n % 10 + '0';
+	write(1, &digit, 1);
 }
 
 void			print_d(va_list ap, t_op *opt, int *cnt)
@@ -57,25 +69,27 @@ void			print_d(va_list ap, t_op *opt, int *cnt)
 		n = (opt->len == -1) ? va_arg(ap, short int) : va_arg(ap, signed char);
 	else
 		n = va_arg(ap, int);
-	span = get_int_len(n);
-	if ((n >= 0 && (opt->plus == 1 || opt->space == 1)) || n < 0)
-		span++;
-	if (opt->minus == 0)
-	{
-		while (
+	span = 0;
+		if (n < 0)
+			write(1, "-", 1);
+		else
+			(opt->plus == 1) ? write(1, "+", 1) : write(1, " ", 1);
 	}
-	put_int((unsigned long long int)(-n), opt, &span, cnt);
 }
 
 void	print_i(va_list ap, t_op *opt, int *cnt)
 {
+	return ;
 }
 void	print_u(va_list ap, t_op *opt, int *cnt)
 {
+	return ;
 }
 void	print_x(va_list ap, t_op *opt, int *cnt)
 {
+	return ;
 }
 void	print_X(va_list ap, t_op *opt, int *cnt)
 {
+	return ;
 }

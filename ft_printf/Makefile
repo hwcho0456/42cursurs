@@ -6,7 +6,7 @@
 #    By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/01 10:33:23 by hcho              #+#    #+#              #
-#    Updated: 2021/01/01 11:59:38 by hcho             ###   ########.fr        #
+#    Updated: 2021/01/06 12:59:45 by hcho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra
 LIBFT = libft.a
 LIBDIR = libft
 NAME = libftprintf.a
-SRCS = main.c
+SRCS = ft_printf.c options.c print_integer.c print_character.c print_realnum.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
@@ -25,21 +25,13 @@ all : $(NAME)
 .c.o : 
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT)
-		cp $(LIBDIR)/$(LIBFT) ./$(NAME)
-		$(AR) $(ARFLAGS) $@ $(OBJS)
-
-$(LIBFT): 
-	$(MAKE) -C $(LIBDIR)
-
+$(NAME): $(OBJS) 
+		$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 clean: 
 		rm -f $(OBJS)
-		$(MAKE) clean -C $(LIBDIR)
 
-fclean: 
-		rm -f $(OBJS)
+fclean: clean
 		rm -f $(NAME)
-		$(MAKE) fclean -C $(LIBDIR)
 
 re: fclean all
 

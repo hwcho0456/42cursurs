@@ -6,7 +6,7 @@
 /*   By: hcho <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 10:51:46 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/04 18:09:19 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 12:59:15 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	process(const char *format, va_list ap, size_t *i, int *cnt)
 	if (*(format + *i) == '.')
 	{
 		*i += 1;
-		get_spec(format, ap, i, opt);
+		get_prec(format, ap, i, opt);
 	}
 	get_length(format, i, opt);
 	if (is_type(*(format + *i)))
@@ -97,7 +97,7 @@ int			ft_printf(const char *format, ...)
 		if (*(format + i) == '%')
 		{
 			i++;
-			if (process(format, ap, &i, &cnt) == 0;
+			if (process(format, ap, &i, &cnt) == 0)
 				return (-1);
 		}
 		else

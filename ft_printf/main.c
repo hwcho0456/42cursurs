@@ -2,6 +2,6 @@
 
 int main()
 {
-	printf("%+010d", 5);
+	printf("%-10.3d", 12345);
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 13:05:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/04 18:03:29 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 12:58:24 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ void			get_width(const char *format, va_list ap, size_t *i, t_op *opt)
 		opt->width = va_arg(ap, int);
 		*i += 1;
 	}
-	if (list->width < 0)
+	if (opt->width < 0)
 	{
 		opt->minus = 1;
 		opt->width = -opt->width;
 	}
 }
 
-void			get_spec(const char *format, va_list ap, size_t *i, t_op *opt)
+void			get_prec(const char *format, va_list ap, size_t *i, t_op *opt)
 {
 	while (*(format + *i) >= '0' && *(format + *i) <= '9')
 	{
-		opt->spec = 10 * opt->width + *(format + *i) - '0';
+		opt->prec = 10 * opt->prec + *(format + *i) - '0';
 		*i += 1;
 	}
 	if (*(format + *i) == '*')
 	{
-		opt->spec = va_arg(ap, int);
+		opt->prec = va_arg(ap, int);
 		*i += 1;
 	}
-	if (opt->spec < 0)
-		opt->spec = 0;
+	if (opt->prec < 0)
+		opt->prec = 0;
 }
 
 void			get_length(const char *format, size_t *i, t_op *opt)
