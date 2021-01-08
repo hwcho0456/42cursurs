@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/06 19:56:06 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/06 21:47:34 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void		put_hpadding(unsigned long long n, t_op *opt, int *cnt)
 	num_len= (opt->prec > num_len) ? opt->prec : num_len;
 	sign_len = (opt->plus == 1 || opt->space == 1) ? 1 : 0;
 	sharp_len = (opt->sharp == 1) ? 2 : 0;
-	padding = opt->width - num_len - sign_len - sharp_len; 
+	padding = opt->width - num_len - sign_len - sharp_len;
+	if (opt->sharp == 1 && opt->zero == 1)
+	{
+		write(1, "0", 1);
+		(g_hex[10] == 'A') ? write(1, "X", 1) : write(1, "x", 1);
+		*cnt += 2;
+	}
 	while (padding > 0)
 	{
 		(opt->zero == 1) ? write(1, "0", 1) : write(1, " ", 1);
@@ -61,9 +67,10 @@ static void	cur_hnum(unsigned long long n, unsigned long long o, t_op *opt, int 
 {
 	if (n == 0)
 	{
-		if (opt->sharp == 1)
+		if (opt->sharp == 1 && opt->zero == 0)
 		{
-			write(1, "0X", 2);
+			write(1, "0", 1);
+			(g_hex[10] == 'A') ? write(1, "X", 1) : write(1, "x", 1);
 			*cnt += 2;
 		}
 		put_hzero(o, opt, cnt);
