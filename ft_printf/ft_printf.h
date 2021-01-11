@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:33:35 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/07 15:44:08 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/09 13:03:05 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			print_X(va_list ap, t_op *opt, int *cnt);
 void			print_c(va_list ap, t_op *opt, int *cnt);
 void			print_s(va_list ap, t_op *opt, int *cnt);
 void			print_p(va_list ap, t_op *opt, int *cnt);
-void			print_n(va_list ap, int *cnt);
+void			print_n(va_list ap, t_op *opt, int *cnt);
 void			print_percent(int *cnt);
 void			print_f(va_list ap, t_op *opt, int *cnt);
 void			print_e(va_list ap, t_op *opt, int *cnt);

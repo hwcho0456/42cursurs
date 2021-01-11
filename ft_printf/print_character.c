@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:47 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/07 15:43:54 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/09 13:02:45 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,18 @@ void	print_p(va_list ap, t_op *opt, int *cnt)
 	opt->len = 2;
 	print_x(ap, opt, cnt);
 }
-void	print_n(va_list ap, int *cnt)
+void	print_n(va_list ap, t_op *opt, int *cnt)
 {
-	int	*n;
-
-	n = va_arg(ap, int *);
-	*n = *cnt;
+	if (opt->len == 2)
+		*(va_arg(ap, long long *)) = (long long)*cnt;
+	else if (opt->len == 1)
+		*(va_arg(ap, long *)) = (long)*cnt;
+	else if (opt->len == -1)
+		*(va_arg(ap, short *)) = (short)*cnt;
+	else if (opt->len == -2)
+		*(va_arg(ap, char *)) = (char)*cnt; 
+	else
+		*(va_arg(ap, int *)) = *cnt;
 }
 void	print_percent(int *cnt)
 {

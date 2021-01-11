@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/06 19:47:22 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/11 17:59:16 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ void	print_d(va_list ap, t_op *opt, int *cnt)
 	long long	n;
 
 	opt->sharp = 0;
-	if (opt->plus == 1)
-		opt->space = 0;
-	if (opt->minus == 1 || opt->dot == 1)
-		opt->zero = 0;
+	opt->space = (opt->plus == 1) ? 0 : opt->space;
+	opt->zero = (opt->minus == 1 || opt->dot == 1) ? 0 : opt->zero;
 	if (opt->len > 0)
 		n = (opt->len == 1) ? va_arg(ap, long) : va_arg(ap, long long);
 	else if (opt->len < 0)
 		n = (opt->len == -1) ? (short)va_arg(ap, int) : (char)va_arg(ap, int);
 	else
 		n = va_arg(ap, int);
+	if (opt->dot == 1 && opt->prec == 0 && n == 0)
+		return ;
 	if (opt->minus == 1 || opt->zero == 1)
 	{
 		put_dsign(n, opt, cnt);
@@ -61,6 +61,8 @@ void	print_u(va_list ap, t_op *opt, int *cnt)
 		n = (unsigned char)va_arg(ap, unsigned int);
 	else
 		n = va_arg(ap, unsigned int);
+	if (opt->dot == 1 && opt->prec == 0 && n == 0)
+		return ;
 	(opt->minus == 1) ? put_unum(n, opt, cnt) : put_upadding(n, opt, cnt);
 	(opt->minus == 1) ? put_upadding(n, opt, cnt) : put_unum(n, opt, cnt);
 }
@@ -83,6 +85,8 @@ void	print_x(va_list ap, t_op *opt, int *cnt)
 		n = (unsigned char)va_arg(ap, unsigned int);
 	else
 		n = va_arg(ap, unsigned int);
+	if (opt->dot == 1 && opt->prec == 0 && n == 0)
+		return ;
 	(opt->minus == 1) ? put_hnum(n, opt, cnt) : put_hpadding(n, opt, cnt);
 	(opt->minus == 1) ? put_hpadding(n, opt, cnt) : put_hnum(n, opt, cnt);
 }
@@ -104,7 +108,9 @@ void	print_X(va_list ap, t_op *opt, int *cnt)
 	else if (opt->len ==  -2)
 		n = (unsigned char)va_arg(ap, unsigned int);
 	else
-		n = va_arg(ap, unsigned int);
+		n = va_arg(ap, unsigned int);	
+	if (opt->dot == 1 && opt->prec == 0 && n == 0)
+		return ;
 	(opt->minus == 1) ? put_hnum(n, opt, cnt) : put_hpadding(n, opt, cnt);
 	(opt->minus == 1) ? put_hpadding(n, opt, cnt) : put_hnum(n, opt, cnt);
 }
