@@ -3,8 +3,8 @@
 
 int main()
 {
-	int a = ft_printf("% .u\n", 0);
-	int b = printf("% .u\n", 0);
+	int a = ft_printf("%lg\n", 1.000003003e-100);
+	int b = printf("%lg\n", 1.000003003e-100);
 	printf("ft vs real : %d %d\n", a, b);
 	return 0;
 }

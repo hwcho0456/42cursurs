@@ -6,11 +6,12 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/11 17:41:42 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/13 18:32:42 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "print_realnum_utils.h"
 
 int		is_inf(double f)
 {
@@ -26,7 +27,7 @@ int		is_inf(double f)
 	return (0);
 }
 
-void	ft_round(double *f, t_op *opt)
+void	ft_fround(double *f, t_op *opt)
 {
 	double	d;
 	int		exp;
@@ -34,7 +35,7 @@ void	ft_round(double *f, t_op *opt)
 
 	d = (*f < 0) ? -(*f) : *f;
 	exp = 0;
-	while (d > 10.00000000000000000000 && ++exp >= 0)
+	while (d >= 10.00000000000000000000 && ++exp >= 0)
 		d = d / 10.0000000000000000000;
 	fp = 1.00000000000000000000;
 	while (d < 1.00000000000000000000)
@@ -52,4 +53,106 @@ void	ft_round(double *f, t_op *opt)
 	}
 	if ((char)d >= 5)
 		*f = (*f < 0) ? *f - (10 - (char)d) * fp : *f + (10 - (char)d) * fp; 
+}
+
+void	ft_eround(double *f, t_op *opt)
+{
+	double	d;
+	int		exp;
+	double	fp;
+
+	d = (*f < 0) ? -(*f) : *f;
+	exp = 0;
+	while (d >= 10.00000000000000000000 && ++exp >= 0)
+		d = d / 10.0000000000000000000;
+	while (d < 1.00000000000000000000)
+	{
+		d = d * 10.00000000000000000000;
+		exp--;
+	}
+	fp = 1.00000000000000000000;
+	while (exp != 0)
+	{
+		fp = (exp > 0) ? fp * 10.00000000000000000000 : fp / 10.00000000000000000000;
+		exp = (exp > 0) ? exp - 1 : exp + 1;
+	}
+	while (--exp >= -opt->prec - 1)
+	{
+		d = (d - (char)d) * 10.00000000000000000000;
+		fp = fp / 10.00000000000000000000;
+	}
+	if ((char)d >= 5)
+		*f = (*f < 0) ? *f - (10 - (char)d) * fp : *f + (10 - (char)d) * fp; 
+}
+
+int		get_gprec(double f, t_op *opt)
+{
+	int	P;
+	int	X;
+
+	if (is_inf(f))
+		return (1);
+	P = opt->prec;
+	if (opt->dot == 0 || opt->prec == 0)
+		P = (opt->dot == 0) ? 6 : 1;
+	X = 0;
+	while (f >= 10.0)
+	{
+		f = f / 10.0;
+		X++;
+	}
+	while (f < 1.0 && f != 0)
+	{
+		f = f * 10.0;
+		X--;
+	}
+	opt->prec = (P > X && X >= -4) ? P - (X + 1) : P - 1;
+	return ((P > X && X >= -4) ? 1 : 0);
+}
+
+void	find_omitprec(double f, t_op *opt, int form)
+{
+	double	d;
+	int		exp;
+	int		omitcnt;
+
+	d = (f > 0) ? f : -f;
+	if (form)
+	{
+		exp = 0;
+		while (d >= 10.0)
+		{
+			d = d / 10.0;
+			exp++;
+		}
+		while (exp > 0)
+		{
+			d = (d - (char)d) * 10.0;
+			exp--;
+		}
+		omitcnt = 0;
+		while (--exp > -opt->prec - 2)
+		{
+			omitcnt = ((char)d == 0) ? omitcnt + 1 : 0;
+			d = (d - (char)d) * 10.0;
+		}
+		opt->prec -= omitcnt;
+	}
+	else
+	{
+		while (d >= 10.0)
+			d = d / 10.0;
+		while (d < 1.0 && d != 0.0)
+			d = d * 10.0;
+		d = (d - (char)d) * 10.0;
+		omitcnt = 0;
+		exp = 0;
+		while (--exp > -opt->prec - 1)
+		{
+			omitcnt = ((char)d == 0) ? omitcnt + 1 : 0;
+			d = (d - (char)d) * 10.0;
+		}
+		opt->prec -= omitcnt;
+	}
+	return ;
 }
