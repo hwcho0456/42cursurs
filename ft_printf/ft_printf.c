@@ -6,7 +6,7 @@
 /*   By: hcho <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 10:51:46 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/09 13:03:21 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/15 16:45:51 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	is_type(const char c)
 {
-	const char *type = "diuxXcspfegn%";
-	size_t	i;
+	const char	*type = "diuxXcspfegn%";
+	size_t		i;
 
 	i = 0;
 	while (*(type + i))
@@ -34,11 +34,11 @@ static void	print_type(const char type, va_list ap, t_op *opt, int *cnt)
 	else if (type == 'u')
 		print_u(ap, opt, cnt);
 	else if (type == 'x')
-		print_x(ap, opt, cnt);
+		print_x(ap, opt, cnt, 0);
 	else if (type == 'X')
-		print_X(ap, opt, cnt);	
+		print_x(ap, opt, cnt, 1);
 	else if (type == 'c')
-		print_c(ap, opt, cnt);	
+		print_c(ap, opt, cnt);
 	else if (type == 's')
 		print_s(ap, opt, cnt);
 	else if (type == 'p')
@@ -46,7 +46,7 @@ static void	print_type(const char type, va_list ap, t_op *opt, int *cnt)
 	else if (type == 'f')
 		print_f(ap, opt, cnt);
 	else if (type == 'e')
-		print_e(ap, opt, cnt);	
+		print_e(ap, opt, cnt);
 	else if (type == 'g')
 		print_g(ap, opt, cnt);
 	else if (type == 'n')
@@ -86,8 +86,8 @@ int			ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	size_t	i;
-	int		cnt;	
-	
+	int		cnt;
+
 	va_start(ap, format);
 	cnt = 0;
 	i = 0;

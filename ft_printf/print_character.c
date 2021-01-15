@@ -6,17 +6,17 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:47 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/09 13:02:45 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/15 17:08:53 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "print_integer_utils.h"
 
-void	print_c(va_list ap, t_op *opt, int *cnt)
+void		print_c(va_list ap, t_op *opt, int *cnt)
 {
 	char	c;
-	int		padding;		
+	int		padding;
 
 	c = (char)va_arg(ap, int);
 	padding = opt->width - 1;
@@ -30,7 +30,28 @@ void	print_c(va_list ap, t_op *opt, int *cnt)
 	}
 	(opt->minus == 0) ? write(1, &c, 1) : 0;
 }
-void	print_s(va_list ap, t_op *opt, int *cnt)
+
+static void	put_string(char *str, t_op *opt, int str_len, int padding)
+{
+	if (opt->minus == 1)
+	{
+		if (str)
+			write(1, str, str_len);
+		else if (opt->dot == 0 || opt->prec >= 6)
+			write(1, "(null)", 6);
+	}
+	while (--padding >= 0)
+		write(1, " ", 1);
+	if (opt->minus == 0)
+	{
+		if (str)
+			write(1, str, str_len);
+		else if (opt->dot == 0 || opt->prec >= 6)
+			write(1, "(null)", 6);
+	}
+}
+
+void		print_s(va_list ap, t_op *opt, int *cnt)
 {
 	char	*str;
 	int		padding;
@@ -38,46 +59,48 @@ void	print_s(va_list ap, t_op *opt, int *cnt)
 
 	str = va_arg(ap, char *);
 	str_len = 0;
-	while (*(str + str_len))
-		str_len++;
-	str_len = (opt->dot == 1 && opt->prec < str_len) ? opt->prec : str_len;
-	if (!str)
+	if (str)
 	{
-		str = "(null)";
-		str_len = 6;
+		while (*(str + str_len))
+			str_len++;
+		str_len = (opt->dot == 1 && opt->prec < str_len) ? opt->prec : str_len;
 	}
-	padding = opt->width - str_len;
-	*cnt += str_len;
-	(opt->minus == 1) ? write(1, str, str_len) : 0;
-	while (padding > 0)
-	{
-		write(1, " ", 1);
-		*cnt += 1;
-		padding--;
-	}
-	(opt->minus == 0) ? write(1, str, str_len) : 0;
-}
-void	print_p(va_list ap, t_op *opt, int *cnt)
-{
-	opt->prec = 12;
-	opt->sharp = 1;
-	opt->len = 2;
-	print_x(ap, opt, cnt);
-}
-void	print_n(va_list ap, t_op *opt, int *cnt)
-{
-	if (opt->len == 2)
-		*(va_arg(ap, long long *)) = (long long)*cnt;
-	else if (opt->len == 1)
-		*(va_arg(ap, long *)) = (long)*cnt;
-	else if (opt->len == -1)
-		*(va_arg(ap, short *)) = (short)*cnt;
-	else if (opt->len == -2)
-		*(va_arg(ap, char *)) = (char)*cnt; 
+	if (str)
+		padding = opt->width - str_len;
 	else
-		*(va_arg(ap, int *)) = *cnt;
+		padding = opt->width - (opt->dot == 1 && opt->prec < 6 ? 0 : 6);
+	if (str)
+		*cnt += str_len;
+	else if (opt->dot == 0 || opt->prec >= 6)
+		*cnt += 6;
+	*cnt += (padding > 0) ? padding : 0;
+	put_string(str, opt, str_len, padding);
 }
-void	print_percent(int *cnt)
+
+void		print_p(va_list ap, t_op *opt, int *cnt)
+{
+	unsigned long long	n;
+
+	g_hex = "0123456789abcdef";
+	opt->space = (opt->plus == 1) ? 0 : opt->space;
+	if (opt->minus == 1 || opt->dot == 1)
+		opt->zero = 0;
+	n = va_arg(ap, unsigned long long);
+	if (opt->minus == 1 || opt->zero == 1)
+	{
+		put_psign(n, opt, cnt);
+		(opt->minus == 1) ? put_pnum(n, opt, cnt) : put_ppadding(n, opt, cnt);
+		(opt->minus == 1) ? put_ppadding(n, opt, cnt) : put_pnum(n, opt, cnt);
+	}
+	else
+	{
+		put_ppadding(n, opt, cnt);
+		put_psign(n, opt, cnt);
+		put_pnum(n, opt, cnt);
+	}
+}
+
+void		print_percent(int *cnt)
 {
 	*cnt += 1;
 	write(1, "%", 1);

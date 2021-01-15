@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/13 18:24:43 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/13 23:49:28 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,18 @@ void	print_g(va_list ap, t_op *opt, int *cnt)
 		form ? put_fsign(f, opt, cnt) : put_esign(f, opt, cnt);
 		form ? put_fnum(f, opt, cnt) : put_enum(f, opt, cnt);
 	}
+}
+
+void	print_n(va_list ap, t_op *opt, int *cnt)
+{
+	if (opt->len == 2)
+		*(va_arg(ap, long long *)) = (long long)*cnt;
+	else if (opt->len == 1)
+		*(va_arg(ap, long *)) = (long)*cnt;
+	else if (opt->len == -1)
+		*(va_arg(ap, short *)) = (short)*cnt;
+	else if (opt->len == -2)
+		*(va_arg(ap, char *)) = (char)*cnt; 
+	else
+		*(va_arg(ap, int *)) = *cnt;
 }

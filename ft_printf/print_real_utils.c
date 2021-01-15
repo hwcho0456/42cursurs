@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/13 18:32:42 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/15 17:19:55 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int		is_inf(double f)
 	if ((*(unsigned long long *)&f & 0x7FF0000000000000) == 0x7FF0000000000000)
 	{
 		if (*(unsigned long long *)&f == 0x7FF0000000000000)
-			return (3); // +inf
+			return (3);
 		else if (*(unsigned long long *)&f == 0xFFF0000000000000)
-			return (2); // -inf
+			return (2);
 		else
-			return (1); // -nan
+			return (1);
 	}
 	return (0);
 }
@@ -52,7 +52,7 @@ void	ft_fround(double *f, t_op *opt)
 		fp = fp / 10.00000000000000000000;
 	}
 	if ((char)d >= 5)
-		*f = (*f < 0) ? *f - (10 - (char)d) * fp : *f + (10 - (char)d) * fp; 
+		*f = (*f < 0) ? *f - (10 - (char)d) * fp : *f + (10 - (char)d) * fp;
 }
 
 void	ft_eround(double *f, t_op *opt)
@@ -87,27 +87,27 @@ void	ft_eround(double *f, t_op *opt)
 
 int		get_gprec(double f, t_op *opt)
 {
-	int	P;
-	int	X;
+	int	p;
+	int	x;
 
 	if (is_inf(f))
 		return (1);
-	P = opt->prec;
+	p = opt->prec;
 	if (opt->dot == 0 || opt->prec == 0)
-		P = (opt->dot == 0) ? 6 : 1;
-	X = 0;
+		p = (opt->dot == 0) ? 6 : 1;
+	x = 0;
 	while (f >= 10.0)
 	{
 		f = f / 10.0;
-		X++;
+		x++;
 	}
 	while (f < 1.0 && f != 0)
 	{
 		f = f * 10.0;
-		X--;
+		x--;
 	}
-	opt->prec = (P > X && X >= -4) ? P - (X + 1) : P - 1;
-	return ((P > X && X >= -4) ? 1 : 0);
+	opt->prec = (p > x && x >= -4) ? p - (x + 1) : p - 1;
+	return ((p > x && x >= -4) ? 1 : 0);
 }
 
 void	find_omitprec(double f, t_op *opt, int form)

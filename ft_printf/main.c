@@ -3,8 +3,9 @@
 
 int main()
 {
-	int a = ft_printf("%lg\n", 1.000003003e-100);
-	int b = printf("%lg\n", 1.000003003e-100);
+	wchar_t *s = L"안녕하세요";
+	int a = ft_printf("%lc\n", s);
+	int b = printf("%S\n", s);
 	printf("ft vs real : %d %d\n", a, b);
 	return 0;
 }

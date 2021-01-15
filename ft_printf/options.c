@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 13:05:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/06 17:34:33 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/13 19:47:08 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ void			get_prec(const char *format, va_list ap, size_t *i, t_op *opt)
 		*i += 1;
 	}
 	if (opt->prec < 0)
+	{
 		opt->prec = 0;
+		opt->dot = 0;
+	}
 }
 
 void			get_length(const char *format, size_t *i, t_op *opt)

@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/06 19:29:22 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/15 16:51:19 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void		put_dpadding(long long n, t_op *opt, int *cnt)
 	i = n;
 	while ((i /= 10) != 0)
 		num_len++;
-	num_len= (opt->prec > num_len) ? opt->prec : num_len;
+	num_len = (opt->dot == 1 && opt->prec == 0 && n == 0) ? 0 : num_len;
+	num_len = (opt->prec > num_len) ? opt->prec : num_len;
 	sign_len = (n < 0 || opt->plus == 1 || opt->space == 1) ? 1 : 0;
-	padding = opt->width - num_len - sign_len; 
+	padding = opt->width - num_len - sign_len;
 	while (padding > 0)
 	{
 		(opt->zero == 1) ? write(1, "0", 1) : write(1, " ", 1);
@@ -93,6 +94,8 @@ void		put_dnum(long long n, t_op *opt, int *cnt)
 	}
 	else
 	{
+		if (opt->dot == 1 && opt->prec == 0 && n == 0)
+			return ;
 		*cnt += 1;
 		cur_dnum(n / 10, n, opt, cnt);
 		digit = '0' + (n % 10);
