@@ -3,9 +3,10 @@
 
 int main()
 {
-	wchar_t *s = L"안녕하세요";
-	int a = ft_printf("%lc\n", s);
-	int b = printf("%S\n", s);
+	int a = ft_printf("%.0g %.1g %.2g", -9.9, -9.5, -9.9);	
+	printf("\n");	
+	int b = printf("%.0g %.1g %.2g", -9.9, -9.5, -9.9);	
+	printf("\n");
 	printf("ft vs real : %d %d\n", a, b);
 	return 0;
 }

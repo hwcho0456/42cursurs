@@ -6,7 +6,7 @@
 /*   By: hcho <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 10:51:46 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/15 16:45:51 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/21 13:00:26 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_type(const char c)
 {
-	const char	*type = "diuxXcspfegn%";
+	const char	*type = "diuxXocspfegn%";
 	size_t		i;
 
 	i = 0;
@@ -33,10 +33,10 @@ static void	print_type(const char type, va_list ap, t_op *opt, int *cnt)
 		print_d(ap, opt, cnt);
 	else if (type == 'u')
 		print_u(ap, opt, cnt);
-	else if (type == 'x')
-		print_x(ap, opt, cnt, 0);
-	else if (type == 'X')
-		print_x(ap, opt, cnt, 1);
+	else if (type == 'x' || type == 'X')
+		(type == 'x') ? print_x(ap, opt, cnt, 0) : print_x(ap, opt, cnt, 1);
+	else if (type == 'o')
+		print_o(ap, opt, cnt);
 	else if (type == 'c')
 		print_c(ap, opt, cnt);
 	else if (type == 's')

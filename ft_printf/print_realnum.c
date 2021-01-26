@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/13 23:49:28 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/23 13:05:40 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,81 +16,90 @@
 void	print_f(va_list ap, t_op *opt, int *cnt)
 {
 	double		f;
+	long double d;
 
-	if (opt->dot == 0)
-		opt->prec = 6;
+	opt->prec = (opt->dot == 0) ? 6 : opt->prec;
+	opt->zero = (opt->minus == 1) ? 0 : opt->zero;
 	f = va_arg(ap, double);
-	if (opt->len == 0 && is_inf((float)f) == 0 && (float)f != 0.0)
-		f = (float)f;
+	d = (long double)f;
 	if (is_inf(f) != 0)
 		opt->zero = 0;
 	else if (f != 0)
-		ft_fround(&f, opt);
+		ft_fround(&d, opt);
 	if (opt->minus == 1 || opt->zero == 1)
 	{
-		put_fsign(f, opt, cnt);
-		(opt->minus == 1) ? put_fnum(f, opt, cnt) : put_fpadding(f, opt, cnt);
-		(opt->minus == 1) ? put_fpadding(f, opt, cnt) : put_fnum(f, opt, cnt);
+		put_fsign(d, opt, cnt);
+		(opt->minus == 1) ? put_fnum(f, d, opt, cnt) : put_fpadding(f, opt, cnt);
+		(opt->minus == 1) ? put_fpadding(f, opt, cnt) : put_fnum(f, d, opt, cnt);
 	}
 	else
 	{
 		put_fpadding(f, opt, cnt);
 		put_fsign(f, opt, cnt);
-		put_fnum(f, opt, cnt);
+		put_fnum(f, d, opt, cnt);
 	}
 }
 void	print_e(va_list ap, t_op *opt, int *cnt)
 {
 	double		f;
-
-	if (opt->dot == 0)
-		opt->prec = 6;	
+	long double	d;
+	
+	opt->prec = (opt->dot == 0) ? 6 : opt->prec;
+	opt->zero = (opt->minus == 1) ? 0 : opt->zero;
 	f = va_arg(ap, double);
-	if (opt->len == 0 && is_inf((float)f) == 0 && (float)f != 0.0)
-		f = (float)f;
+	d = (long double)f;
 	if (is_inf(f) != 0)
 		opt->zero = 0;
 	else if (f != 0)
-		ft_eround(&f, opt);
+		ft_eround(&d, opt);
 	if (opt->minus == 1 || opt->zero == 1)
 	{
 		put_esign(f, opt, cnt);
-		(opt->minus == 1) ? put_enum(f, opt, cnt) : put_epadding(f, opt, cnt);
-		(opt->minus == 1) ? put_epadding(f, opt, cnt) : put_enum(f, opt, cnt);
+		(opt->minus == 1) ? put_enum(f, d, opt, cnt) : put_epadding(f, opt, cnt);
+		(opt->minus == 1) ? put_epadding(f, opt, cnt) : put_enum(f, d, opt, cnt);
 	}
 	else
 	{
 		put_epadding(f, opt, cnt);
 		put_esign(f, opt, cnt);
-		put_enum(f, opt, cnt);
+		put_enum(f, d, opt, cnt);
 	}
 }
+
+static void	adjust_g_option(t_op *opt, double f, long double d, int form)
+{
+	opt->zero = (opt->minus == 1) ? 0 : opt->zero;
+	opt->width += ((f == 0.0 || f == -0.0) && opt->sharp == 0) ? 1 : 0;
+	opt->zero =  (is_inf(f) != 0) ? 0 : opt->zero;	
+	(is_inf(f) == 0 && opt->sharp == 0) ? find_omitprec(d, opt, form) : 0;
+}
+
 void	print_g(va_list ap, t_op *opt, int *cnt)
 {
 	double		f;
+	long double	d;
 	int			form;
-
+	
 	f = va_arg(ap, double);
-	f = (!opt->len && is_inf((float)f) == 0 && (float)f != 0.0) ? (float)f : f;
+	d = (long double)f;
 	form = get_gprec(f, opt);
-	opt->zero =  (is_inf(f) != 0) ? 0 : opt->zero;
 	if (is_inf(f) == 0 && f != 0)
-		form ? ft_fround(&f, opt) : ft_eround(&f, opt);
-	(opt->sharp == 0) ? find_omitprec(f, opt, form) : 0;
+		form ? ft_fround(&d, opt) : ft_eround(&d, opt);
+	adjust_g_option(opt, f, d, form);
 	if (opt->minus == 1 || opt->zero == 1)
 	{
 		form ? put_fsign(f, opt, cnt) : put_esign(f, opt, cnt);
 		if (opt->minus == 1)
-			form  ? put_fnum(f, opt, cnt) : put_enum(f, opt, cnt);
+			form  ? put_fnum(f, d, opt, cnt) : put_enum(f, d, opt, cnt);
 		form ? put_fpadding(f, opt, cnt) : put_epadding(f, opt, cnt);
 		if (opt->minus == 0) 
-			form  ? put_fnum(f, opt, cnt) : put_enum(f, opt, cnt);
+			form  ? put_fnum(f, d, opt, cnt) : put_enum(f, d, opt, cnt);
 	}
 	else
 	{
 		form ? put_fpadding(f, opt, cnt) : put_epadding(f, opt, cnt);
 		form ? put_fsign(f, opt, cnt) : put_esign(f, opt, cnt);
-		form ? put_fnum(f, opt, cnt) : put_enum(f, opt, cnt);
+		form ? put_fnum(f, d, opt, cnt) : put_enum(f, d, opt, cnt);
 	}
 }
 

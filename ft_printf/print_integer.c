@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/15 16:45:11 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/21 12:57:58 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,27 @@ void	print_x(va_list ap, t_op *opt, int *cnt, int upper)
 		n = va_arg(ap, unsigned int);
 	(opt->minus == 1) ? put_xnum(n, opt, cnt) : put_xpadding(n, opt, cnt);
 	(opt->minus == 1) ? put_xpadding(n, opt, cnt) : put_xnum(n, opt, cnt);
+}
+
+void	print_o(va_list ap, t_op *opt, int *cnt)
+{
+	unsigned long long	n;
+
+	g_oct = "01234567";
+	opt->plus = 0;
+	opt->space = 0;
+	if (opt->minus == 1 || opt->dot == 1)
+		opt->zero = 0;
+	if (opt->len ==  2)
+		n = va_arg(ap, unsigned long long);	
+	else if (opt->len ==  1)
+		n = va_arg(ap, unsigned long);
+	else if (opt->len ==  -1)
+		n = (unsigned short)va_arg(ap, unsigned int);
+	else if (opt->len ==  -2)
+		n = (unsigned char)va_arg(ap, unsigned int);
+	else
+		n = va_arg(ap, unsigned int);
+	(opt->minus == 1) ? put_onum(n, opt, cnt) : put_opadding(n, opt, cnt);
+	(opt->minus == 1) ? put_opadding(n, opt, cnt) : put_onum(n, opt, cnt);
 }

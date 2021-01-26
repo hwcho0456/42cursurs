@@ -6,62 +6,63 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/13 18:27:26 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/19 19:41:56 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "print_realnum_utils.h"
 
-int		get_enumlen(double f, t_op *opt, int *dp, int *exp)
+static const long double			bias = 0.00000000000000006L;
+static const unsigned long long 	sc = 0x8000000000000000;
+
+int		get_enumlen(double f, t_op *opt, int dp, int exp)
 {
 	int	num_len;
 
 	num_len = 0;
-	while (f >= 10.00000000000000000000)
+	while (f >= 10.0)
 	{
-		f = f / 10.0000000000000000000;
-		*exp += 1;
+		f = f / 10.0;
+		exp += 1;
 	}
-	while (f != 0.0 && f < 1.00000000000000000000)
+	while (f != 0.0 && (char)(f + bias) == 0)
 	{
-		f = f * 10.00000000000000000000;
-		*exp -= 1;
+		f = f * 10.0;
+		exp -= 1;
 	}
-	f = f - (char)f;
+	f = f - (char)(f + bias);
 	num_len += 1;
 	num_len = (opt->prec != 0 || opt->sharp == 1) ? num_len + 1 : num_len;
-	while (*dp < opt->prec)
+	while (dp < opt->prec)
 	{
-		f = f * 10.00000000000000000000;
-		f = f - (char)f;
+		f = f * 10.0;
+		f = f - (char)(f + bias);
 		num_len += 1;
-		*dp += 1;
+		dp += 1;
 	}
-	num_len = (*exp >= 100 || *exp <= 100) ? num_len + 5 : num_len + 4;
+	num_len = (exp >= 100 || exp <= 100) ? num_len + 5 : num_len + 4;
 	return (num_len);
 }
 void	put_epadding(double f, t_op *opt, int *cnt)
 {
 	int	num_len;
-	int	exp;
 	int sign_len;
+	int sign;
 	int padding;
-	int dp;
 
+	sign = ((*(unsigned long long *)&f & sc) == sc) ? -1 : 1;
 	if (is_inf(f))
 		num_len = 3;
 	else
 	{
-		f = (f < 0) ? -f : f;
-		exp = 0;
-		dp = 0;
-		num_len = get_enumlen(f, opt, &dp, &exp);
+		f = (f <= -0.0) ? -f : f;
+		num_len = get_enumlen(f, opt, 0, 0);
 	}
 	if (is_inf(f))
 		sign_len = (is_inf(f) == 3 && opt->plus == 0 && opt->space == 0) ? 0 : 1;
 	else
-		sign_len = (!(f < 0) && opt->plus == 0 && opt->space == 0) ? 0 : 1;
+		sign_len = (sign == -1 || opt->space == 1 || opt->plus == 1) ? 1 : 0;
 	padding = opt->width - num_len - sign_len + 1;
 	while (--padding > 0)
 	{
@@ -73,12 +74,11 @@ void	put_epadding(double f, t_op *opt, int *cnt)
 void	put_esign(double f, t_op *opt, int *cnt)
 {
 	int sign;
-	const unsigned long long signcheck = 0x8000000000000000;
 
 	if (is_inf(f))
 		sign = (is_inf(f) == 3) ? 1 : -1; 
 	else
-		sign = ((*(unsigned long long *)&f & signcheck) == signcheck) ? -1 : 1;
+		sign = ((*(unsigned long long *)&f & sc) == sc) ? -1 : 1;
 	if (sign == -1 || opt->plus == 1 || opt->space == 1)
 	{
 		if (sign == -1)
@@ -89,27 +89,27 @@ void	put_esign(double f, t_op *opt, int *cnt)
 	}
 }
 
-void	put_eintnum(double *f, int *exp, int *cnt)
+void	put_eintnum(long double *f, int *exp, int *cnt)
 {
 	char	digit;
 
-	while (*f >= 10.00000000000000000000)
+	while (*f >= 10.0)
 	{
-		*f = *f / 10.0000000000000000000;
+		*f = *f / 10.0;
 		*exp += 1;
 	}
-	while (*f != 0.0 && *f < 1.00000000000000000000)
+	while (*f != 0.0 && (char)(*f + bias) == 0)
 	{
-		*f = *f * 10.0000000000000000000;
+		*f = *f * 10.0;
 		*exp -= 1;
 	}
-	digit = ((char)(*f) % 10) + '0';
-	*f = *f - (char)(*f);
+	digit = ((char)((*f) + bias) % 10) + '0';
+	*f = *f - (char)((*f) + bias);
 	write(1, &digit, 1);
 	*cnt += 1;
 }
 
-void	put_enum(double f, t_op *opt, int *cnt)
+void	put_enum(double f, long double d, t_op *opt, int *cnt)
 {
 	int	dp;
 	char digit;
@@ -121,17 +121,17 @@ void	put_enum(double f, t_op *opt, int *cnt)
 		*cnt += 3;
 		return ;
 	}
-	f = (f < 0) ? -f : f;
+	d = (d < 0) ? -d : d;
 	exp = 0;
-	put_eintnum(&f, &exp, cnt);
+	put_eintnum(&d, &exp, cnt);
 	(opt->prec > 0 || opt->sharp == 1) ? write(1, ".", 1) : 0;
 	*cnt += (opt->prec > 0 || opt->sharp == 1) ? 1 : 0;
 	dp = -1;
 	while (++dp < opt->prec)
 	{
-		f = f * 10.00000000000000000000;
-		digit = ((char)f % 10) + '0';
-		f = f - (char)f;
+		d = d * 10.0;
+		digit = ((char)(d + bias) % 10) + '0';
+		d = d - (char)(d + bias);
 		write(1, &digit, 1);
 		*cnt += 1;
 	}
