@@ -6,7 +6,7 @@
 /*   By: hcho <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/01 10:51:46 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/21 13:00:26 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 14:27:22 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	print_type(const char type, va_list ap, t_op *opt, int *cnt)
 	else if (type == 'n')
 		print_n(ap, opt, cnt);
 	else if (type == '%')
-		print_percent(cnt);
+		print_percent(opt, cnt);
 }
 
 static int	process(const char *format, va_list ap, size_t *i, int *cnt)

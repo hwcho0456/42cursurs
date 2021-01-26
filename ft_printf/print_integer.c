@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/21 12:57:58 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 15:57:51 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	print_u(va_list ap, t_op *opt, int *cnt)
 	opt->space = 0;
 	if (opt->minus == 1 || opt->dot == 1)
 		opt->zero = 0;
-	if (opt->len ==  2)
-		n = va_arg(ap, unsigned long long);	
-	else if (opt->len ==  1)
+	if (opt->len == 2)
+		n = va_arg(ap, unsigned long long);
+	else if (opt->len == 1)
 		n = va_arg(ap, unsigned long);
-	else if (opt->len ==  -1)
+	else if (opt->len == -1)
 		n = (unsigned short)va_arg(ap, unsigned int);
-	else if (opt->len ==  -2)
+	else if (opt->len == -2)
 		n = (unsigned char)va_arg(ap, unsigned int);
 	else
 		n = va_arg(ap, unsigned int);
@@ -72,13 +72,13 @@ void	print_x(va_list ap, t_op *opt, int *cnt, int upper)
 	opt->space = 0;
 	if (opt->minus == 1 || opt->dot == 1)
 		opt->zero = 0;
-	if (opt->len ==  2)
-		n = va_arg(ap, unsigned long long);	
-	else if (opt->len ==  1)
+	if (opt->len == 2)
+		n = va_arg(ap, unsigned long long);
+	else if (opt->len == 1)
 		n = va_arg(ap, unsigned long);
-	else if (opt->len ==  -1)
+	else if (opt->len == -1)
 		n = (unsigned short)va_arg(ap, unsigned int);
-	else if (opt->len ==  -2)
+	else if (opt->len == -2)
 		n = (unsigned char)va_arg(ap, unsigned int);
 	else
 		n = va_arg(ap, unsigned int);
@@ -95,13 +95,13 @@ void	print_o(va_list ap, t_op *opt, int *cnt)
 	opt->space = 0;
 	if (opt->minus == 1 || opt->dot == 1)
 		opt->zero = 0;
-	if (opt->len ==  2)
-		n = va_arg(ap, unsigned long long);	
-	else if (opt->len ==  1)
+	if (opt->len == 2)
+		n = va_arg(ap, unsigned long long);
+	else if (opt->len == 1)
 		n = va_arg(ap, unsigned long);
-	else if (opt->len ==  -1)
+	else if (opt->len == -1)
 		n = (unsigned short)va_arg(ap, unsigned int);
-	else if (opt->len ==  -2)
+	else if (opt->len == -2)
 		n = (unsigned char)va_arg(ap, unsigned int);
 	else
 		n = va_arg(ap, unsigned int);

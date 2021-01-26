@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/21 13:02:15 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 16:14:34 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		put_opadding(unsigned long long n, t_op *opt, int *cnt)
 	num_len = (opt->dot == 1 && opt->prec == 0 && n == 0) ? 0 : num_len;
 	num_len = (opt->prec > num_len) ? opt->prec : num_len;
 	sign_len = (opt->plus == 1 || opt->space == 1) ? 1 : 0;
-	padding = opt->width - num_len - sign_len - ((opt->sharp == 1 && n != 0) ? 1 : 0);
+	padding = opt->width - num_len - sign_len - (opt->sharp && n != 0 ? 1 : 0);
 	if (opt->sharp == 1 && opt->zero == 1 && n != 0)
 	{
 		write(1, "0", 1);

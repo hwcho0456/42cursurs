@@ -6,10 +6,10 @@
 #    By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/01 10:33:23 by hcho              #+#    #+#              #
-#    Updated: 2021/01/21 13:06:06 by hcho             ###   ########.fr        #
+#    Updated: 2021/01/26 15:37:42 by hcho             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-.PHONEY: all bonus clean fclean re test
+.PHONEY: all bonus clean fclean re
 
 AR = ar
 ARFLAGS = rcs
@@ -40,7 +40,3 @@ fclean: clean
 		rm -f $(NAME)
 
 re: fclean all
-
-test:
-	rm -rf a.out
-	gcc -Wall -Wextra main.c ft_printf.c options.c print_character.c print_integer.c print_d_utils.c print_u_utils.c print_x_utils.c print_o_utils.c print_realnum.c print_f_utils.c print_e_utils.c print_real_utils.c print_p_utils.c

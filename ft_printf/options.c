@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 13:05:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/13 19:47:08 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 17:05:53 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			init_option(t_op *opt)
 	opt->width = 0;
 	opt->prec = 0;
 	opt->len = 0;
+	opt->form = 0;
 }
 
 void			get_flag(const char *format, size_t *i, t_op *opt)

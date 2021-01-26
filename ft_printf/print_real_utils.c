@@ -6,14 +6,14 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:30 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/23 14:29:12 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 17:09:22 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "print_realnum_utils.h"
 
-static const long double	b = 0.00000000000000006L;
+static const long double	g_b = 0.00000000000000006L;
 
 int		is_inf(double f)
 {
@@ -47,14 +47,14 @@ void	ft_fround(long double *f, t_op *opt)
 		fp = fp / 10.0;
 	}
 	while (--exp >= 0)
-		d = (d - (int)(d + b)) * 10.0;
+		d = (d - (int)(d + g_b)) * 10.0;
 	while (--exp >= -opt->prec - 2)
 	{
-		l = (int)(d + b);
-		d = (d - (int)(d + b)) * 10.0;
+		l = (int)(d + g_b);
+		d = (d - (int)(d + g_b)) * 10.0;
 		fp = fp / 10.0;
 	}
-	if ((int)(d + b) > 5 || ((int)(d + b) == 5 && (l % 2 || opt->prec != 0)))
+	if ((int)(d + g_b) > 5 || ((int)(d + g_b) == 5 && (l % 2 || opt->prec)))
 		*f = (*f < 0) ? *f - 5 * fp : *f + 5 * fp;
 }
 
@@ -79,11 +79,11 @@ void	ft_eround(long double *f, t_op *opt)
 	}
 	while (--exp >= -opt->prec - 1)
 	{
-		l = (int)(d + b);
-		d = (d - (int)(d + b)) * 10.0;
+		l = (int)(d + g_b);
+		d = (d - (int)(d + g_b)) * 10.0;
 		fp = fp / 10.0;
 	}
-	if ((int)(d + b) > 5 || ((int)(d + b) == 5 && (l % 2 || opt->prec != 0)))
+	if ((int)(d + g_b) > 5 || ((int)(d + g_b) == 5 && (l % 2 || opt->prec)))
 		*f = (*f < 0) ? *f - 5 * fp : *f + 5 * fp;
 }
 
@@ -114,47 +114,31 @@ int		get_gprec(double f, t_op *opt)
 	return ((p > x && x >= -4) ? 1 : 0);
 }
 
-void	find_omitprec(long double d, t_op *opt, int form)
+void	find_omitprec(long double d, t_op *opt, int exp, int omitcnt)
 {
-	int			exp;
-	int			omitcnt;
-
 	d = (d < 0) ? -d : d;
-	if (form)
+	if (opt->form)
 	{
-		exp = 0;
-		while (d >= 10.0)
-		{
+		while (d >= 10.0 && ++exp >= 0)
 			d = d / 10.0;
-			exp++;
-		}
-		while (exp > 0)
-		{
-			d = (d - (char)(d + b)) * 10.0;
-			exp--;
-		}
-		omitcnt = 0;
+		while (exp > 0 && --exp >= -100000)
+			d = (d - (char)(d + g_b)) * 10.0;
 		while (--exp > -opt->prec - 2)
 		{
 			omitcnt = ((char)d == 0) ? omitcnt + 1 : 0;
-			d = (d - (char)(d + b)) * 10.0;
+			d = (d - (char)(d + g_b)) * 10.0;
 		}
-		opt->prec -= omitcnt;
 	}
 	else
 	{
-		while (d >= 10.0)
-			d = d / 10.0;
-		while (d < 1.0 && d != 0.0)
-			d = d * 10.0;
-		d = (d - (char)(d + b)) * 10.0;
-		omitcnt = 0;
-		exp = 0;
+		while (d >= 10.0 || (d < 1.0 && d != 0.0))
+			d = (d >= 10.0) ? d / 10.0 : d * 10.0;
+		d = (d - (char)(d + g_b)) * 10.0;
 		while (--exp > -opt->prec - 1)
 		{
-			omitcnt = ((char)(d + b) == 0) ? omitcnt + 1 : 0;
-			d = (d - (char)(d + b)) * 10.0;
+			omitcnt = ((char)(d + g_b) == 0) ? omitcnt + 1 : 0;
+			d = (d - (char)(d + g_b)) * 10.0;
 		}
-		opt->prec -= omitcnt;
 	}
+	opt->prec -= omitcnt;
 }

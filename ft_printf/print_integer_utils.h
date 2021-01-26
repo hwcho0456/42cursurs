@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:09:42 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/21 12:55:24 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 14:43:30 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,4 @@ void	put_opadding(unsigned long long n, t_op *opt, int *cnt);
 void	put_onum(unsigned long long n, t_op *opt, int *cnt);
 void	put_ppadding(unsigned long long n, t_op *opt, int *cnt);
 void	put_pnum(unsigned long long n, t_op *opt, int *cnt);
-void	put_psign(unsigned long long n, t_op *opt, int *cnt);
 #endif

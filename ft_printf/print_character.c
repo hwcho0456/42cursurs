@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 18:10:47 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/15 17:08:53 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 15:40:02 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,19 @@ static void	put_string(char *str, t_op *opt, int str_len, int padding)
 			write(1, str, str_len);
 		else if (opt->dot == 0 || opt->prec >= 6)
 			write(1, "(null)", 6);
+		else
+			write(1, "(null)", opt->prec);
 	}
 	while (--padding >= 0)
-		write(1, " ", 1);
+		(opt->zero == 1) ? write(1, "0", 1) : write(1, " ", 1);
 	if (opt->minus == 0)
 	{
 		if (str)
 			write(1, str, str_len);
 		else if (opt->dot == 0 || opt->prec >= 6)
 			write(1, "(null)", 6);
+		else
+			write(1, "(null)", opt->prec);
 	}
 }
 
@@ -57,6 +61,7 @@ void		print_s(va_list ap, t_op *opt, int *cnt)
 	int		padding;
 	int		str_len;
 
+	opt->zero = (opt->minus == 1) ? 0 : opt->zero;
 	str = va_arg(ap, char *);
 	str_len = 0;
 	if (str)
@@ -68,11 +73,11 @@ void		print_s(va_list ap, t_op *opt, int *cnt)
 	if (str)
 		padding = opt->width - str_len;
 	else
-		padding = opt->width - (opt->dot == 1 && opt->prec < 6 ? 0 : 6);
+		padding = opt->width - (!opt->dot || opt->prec > 5 ? 6 : opt->prec);
 	if (str)
 		*cnt += str_len;
-	else if (opt->dot == 0 || opt->prec >= 6)
-		*cnt += 6;
+	else
+		*cnt += (opt->dot == 0 || opt->prec >= 6) ? 6 : opt->prec;
 	*cnt += (padding > 0) ? padding : 0;
 	put_string(str, opt, str_len, padding);
 }
@@ -88,20 +93,35 @@ void		print_p(va_list ap, t_op *opt, int *cnt)
 	n = va_arg(ap, unsigned long long);
 	if (opt->minus == 1 || opt->zero == 1)
 	{
-		put_psign(n, opt, cnt);
 		(opt->minus == 1) ? put_pnum(n, opt, cnt) : put_ppadding(n, opt, cnt);
 		(opt->minus == 1) ? put_ppadding(n, opt, cnt) : put_pnum(n, opt, cnt);
 	}
 	else
 	{
 		put_ppadding(n, opt, cnt);
-		put_psign(n, opt, cnt);
 		put_pnum(n, opt, cnt);
 	}
 }
 
-void		print_percent(int *cnt)
+void		print_percent(t_op *opt, int *cnt)
 {
-	*cnt += 1;
-	write(1, "%", 1);
+	int padding;
+
+	opt->zero = (opt->minus == 1) ? 0 : opt->zero;
+	padding = opt->width - 1;
+	if (opt->minus == 1)
+	{
+		*cnt += 1;
+		write(1, "%", 1);
+	}
+	while (--padding >= 0)
+	{
+		*cnt += 1;
+		(opt->zero == 1) ? write(1, "0", 1) : write(1, " ", 1);
+	}
+	if (opt->minus == 0)
+	{
+		*cnt += 1;
+		write(1, "%", 1);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hcho <hcho@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:33:35 by hcho              #+#    #+#             */
-/*   Updated: 2021/01/21 13:01:13 by hcho             ###   ########.fr       */
+/*   Updated: 2021/01/26 17:06:27 by hcho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_op
 	char	sharp;
 	char	zero;
 	char	dot;
+	char	form;
 	int		width;
 	int		prec;
 	int		len;
@@ -46,7 +47,7 @@ void			print_c(va_list ap, t_op *opt, int *cnt);
 void			print_s(va_list ap, t_op *opt, int *cnt);
 void			print_p(va_list ap, t_op *opt, int *cnt);
 void			print_n(va_list ap, t_op *opt, int *cnt);
-void			print_percent(int *cnt);
+void			print_percent(t_op *opt, int *cnt);
 void			print_f(va_list ap, t_op *opt, int *cnt);
 void			print_e(va_list ap, t_op *opt, int *cnt);
 void			print_g(va_list ap, t_op *opt, int *cnt);
